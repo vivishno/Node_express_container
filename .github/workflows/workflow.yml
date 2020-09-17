@@ -37,35 +37,27 @@ jobs:
         password: ${{ secrets.REGISTRY_PASSWORD }}   
 
 
-# Uncomment the below action snippet if the Web app credentials are not updated as web app settings
-    - name: Set Web App ACR authentication
-      uses: Azure/appservice-settings@v1
+    - uses: Azure/aks-set-context@v1
       with:
-         app-name: ${{ env.AZURE_WEBAPP_NAME }} 
-         app-settings-json: |
-           [
-               {
-                   "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
-                   "value": "${{ secrets.REGISTRY_PASSWORD }}",
-                   "slotSetting": false
-               },
-               {
-                   "name": "DOCKER_REGISTRY_SERVER_URL",
-                   "value": "https://${{ env.CONTAINER_REGISTRY }}",
-                   "slotSetting": false
-               },
-               {
-                   "name": "DOCKER_REGISTRY_SERVER_USERNAME",
-                   "value": "${{ secrets.REGISTRY_USERNAME  }}",
-                   "slotSetting": false
-               }
-           ]
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        cluster-name: clust
+        resource-group: tesapp
+        
+    - uses: Azure/k8s-create-secret@v1
+      with:
+        container-registry-url: myclustacr.azurecr.io
+        container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+        container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+        secret-name: demo-k8s-secret
 
-    - name: 'Deploy to Azure Web App for Container'
-      uses: azure/webapps-deploy@v2
-      with: 
-        app-name: ${{ env.AZURE_WEBAPP_NAME }} 
-        images: ${{ env.CONTAINER_REGISTRY }}/myclust4c62:1
-        startup-command: 'npm start'    # Include start up command to start the app container
+    - uses: Azure/k8s-deploy@v1
+      with:
+        manifests: |
+          manifests/deployment.yml
+          manifests/service.yml
+        images: |
+          myclustacr.azurecr.io/myclust4c62:1
+        imagepullsecrets: |
+          demo-k8s-secret
 
 # For more samples to get started with GitHub Action workflows to deploy to Azure, refer to https://github.com/Azure/actions-workflow-samples
