@@ -1,4 +1,4 @@
-apiVersion : apps/v1beta1
+apiVersion : apps/v1
 kind: Deployment
 metadata:
   name: aksdemo 
@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: aksdemo 
-          image: rakolacr.azurecr.io/aksdemo 
+          image: myclustacr.azurecr.io/myclust4c62:1 
           imagePullPolicy: Always
           ports:
           - containerPort: 80
