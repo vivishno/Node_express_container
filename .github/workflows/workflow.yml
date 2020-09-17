@@ -9,8 +9,8 @@ on: push
 #   AZURE_CREDENTIALS, REGISTRY_USERNAME, REGISTRY_PASSWORD, REGISTRY_URL
 # 2. Change these variables for your configuration:
 env:
-  AZURE_WEBAPP_NAME: myappvivek1   # set this to your application's name
-  CONTAINER_REGISTRY: webapptest1.azurecr.io  # set secret with Container Registry URL, example : xyz.azurecr.io 
+  AZURE_WEBAPP_NAME: vivekp   # set this to your application's name
+  CONTAINER_REGISTRY: myclustacr.azurecr.io  # set secret with Container Registry URL, example : xyz.azurecr.io 
 # AZURE_RESOURCE_GROUP: ActionsDemo   # set this to your Azure Resource group's name - Needed only if you are provisioning the app in the workflow
 # AZURE_APP_PLAN: ActionPlan  # set this to your App service plan's name - Needed only if you are provisioning the app in the workflow
   
@@ -35,10 +35,7 @@ jobs:
         login-server: ${{ env.CONTAINER_REGISTRY }}
         username: ${{ secrets.REGISTRY_USERNAME  }}
         password: ${{ secrets.REGISTRY_PASSWORD }}   
-    - name: Docker Build & Push to ACR
-      run: |
-        docker build . -t ${{ env.CONTAINER_REGISTRY }}/nodejsapp:${{ github.sha }}
-        docker push ${{ env.CONTAINER_REGISTRY }}/nodejsapp:${{ github.sha }} 
+
 
 # Uncomment the below action snippet if the Web app credentials are not updated as web app settings
     - name: Set Web App ACR authentication
@@ -68,7 +65,7 @@ jobs:
       uses: azure/webapps-deploy@v2
       with: 
         app-name: ${{ env.AZURE_WEBAPP_NAME }} 
-        images: ${{ env.CONTAINER_REGISTRY }}/nodejsapp:${{ github.sha }}
+        images: ${{ env.CONTAINER_REGISTRY }}/myclust4c62:1
         startup-command: 'npm start'    # Include start up command to start the app container
 
 # For more samples to get started with GitHub Action workflows to deploy to Azure, refer to https://github.com/Azure/actions-workflow-samples
