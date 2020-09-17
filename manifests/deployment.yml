@@ -1,17 +1,23 @@
-apiVersion : apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: aksdemo 
+  name: aksdemo
 spec:
-  replicas: 1
+  selector:
+    matchLabels:
+      app: aksdemo
   template:
     metadata:
       labels:
-        app: aksdemo 
+        app: aksdemo
     spec:
       containers:
-        - name: aksdemo 
-          image: myclustacr.azurecr.io/myclust4c62:1 
-          imagePullPolicy: Always
-          ports:
-          - containerPort: 80
+      - name: aksdemo
+        image: myclustacr.azurecr.io/myclust4c62:1
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
