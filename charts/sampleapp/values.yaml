@@ -2,9 +2,9 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 fullnameOverride: sampleapp
-replicaCount: 1
+replicaCount: 2
 image:
-  repository: tryvivek19.azurecr.io/sample_image
+  repository: tryvivek191.azurecr.io/sample_image
   tag: v1
   pullPolicy: IfNotPresent
 #imagePullSecrets: []
