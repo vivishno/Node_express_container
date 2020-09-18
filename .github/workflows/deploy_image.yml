@@ -8,7 +8,7 @@ on:
 #   CLUST_NAME
 #   RESOURCE_GROUP
 env:
-   CLUST_NAME: clust1       #set this to your kubernetes cluster name 
+   CLUST_NAME: clust      #set this to your kubernetes cluster name 
    RESOURCE_GROUP: check2    #set this to your resource group name
 
 
@@ -42,7 +42,7 @@ jobs:
         helmChart: './charts/sampleapp/' 
         overrideFiles: './charts/sampleapp/values.yaml'
         overrides: |     
-          image.repository: tryvivek19.azurecr.io/sample_image
+          image.repository: tryvivek191.azurecr.io/sample_image
           image.tag: v1
         releaseName: test02
       id: bake 
@@ -51,6 +51,6 @@ jobs:
       with:
         manifests: ${{ steps.bake.outputs.manifestsBundle }}
         images: |
-          tryvivek19.azurecr.io/sample_image:v1
+          tryvivek191.azurecr.io/sample_image:v1
         imagepullsecrets: |
           demo-k8s-secret
