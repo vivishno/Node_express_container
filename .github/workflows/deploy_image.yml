@@ -8,7 +8,7 @@ on:
 #   CLUST_NAME
 #   RESOURCE_GROUP
 env:
-   CLUST_NAME: clust       #set this to your kubernetes cluster name 
+   CLUST_NAME: clust2       #set this to your kubernetes cluster name 
    RESOURCE_GROUP: check2    #set this to your resource group name
 
 
