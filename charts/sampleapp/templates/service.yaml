@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sampleapp
+  labels:
+    app: sampleapp
+    chart: sampleapp-v0.2.0
+    release: azuredevops
+    heritage: Helm
+spec:
+  {{- if .Values.ingress.enabled }}
+  type: ClusterIP
+  {{- else }}
+  type: LoadBalancer
+  {{- end }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
+      protocol: TCP
+      name: http
+  selector:
+    app: sampleapp
+    release: azuredevops
