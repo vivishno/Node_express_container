@@ -10,7 +10,7 @@ on: push
 # 2. Change these variables for your configuration:
 env:
   AZURE_WEBAPP_NAME: vivekp   # set this to your application's name
-  CONTAINER_REGISTRY: myclustacr.azurecr.io  # set secret with Container Registry URL, example : xyz.azurecr.io 
+  CONTAINER_REGISTRY: myclustacr1.azurecr.io  # set secret with Container Registry URL, example : xyz.azurecr.io 
 # AZURE_RESOURCE_GROUP: ActionsDemo   # set this to your Azure Resource group's name - Needed only if you are provisioning the app in the workflow
 # AZURE_APP_PLAN: ActionPlan  # set this to your App service plan's name - Needed only if you are provisioning the app in the workflow
   
@@ -41,11 +41,11 @@ jobs:
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
         cluster-name: clust
-        resource-group: tesapp
+        resource-group: myres
         
     - uses: Azure/k8s-create-secret@v1
       with:
-        container-registry-url: myclustacr.azurecr.io
+        container-registry-url: myclustacr1.azurecr.io
         container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
         container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
         secret-name: demo-k8s-secret
@@ -56,7 +56,7 @@ jobs:
           manifests/deployment.yml
           manifests/service.yml
         images: |
-          myclustacr.azurecr.io/myclust4c62:1
+          myclustacr1.azurecr.io/sample_image:v1
         imagepullsecrets: |
           demo-k8s-secret
 
